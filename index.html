@@ -496,15 +496,16 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
-    <div style="text-align:center; margin-bottom: 2rem;">
-  <img src="Hasan_Photo.jpg" 
-       alt="Md. Hasan Miah"
-       style="width: 200px; height: 200px; 
-              border-radius: 50%; 
-              object-fit: cover;
-              border: 4px solid #c8472a;
-              box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
-</div>
+    <div style="margin-bottom: 1.5rem;">
+      <img src="Hasan_Photo.jpg" 
+           alt="Md. Hasan Miah"
+           style="width: 130px; height: 130px; 
+                  border-radius: 50%; 
+                  object-fit: cover;
+                  object-position: center top;
+                  border: 4px solid #c8472a;
+                  box-shadow: 0 8px 30px rgba(0,0,0,0.2);">
+    </div>
     <div class="hero-tag">Available for opportunities</div>
     <h1 class="hero-name">
       Md. Hasan<em>Miah</em>
@@ -567,7 +568,7 @@
     <div class="about-sidebar">
       <div class="info-card">
         <div class="info-card-label">Email</div>
-        <div class="info-card-value"><a href="mailto:hasan.ethics@gmail.com">hasan.ethics@gmail.com</a></div>
+        <div class="info-card-value"><a href="/cdn-cgi/l/email-protection#ee868f9d8f80c08b9a86878d9dae89838f8782c08d8183"><span class="__cf_email__" data-cfemail="3850594b5956165d4c50515b4b785f55595154165b5755">[email&#160;protected]</span></a></div>
       </div>
       <div class="info-card">
         <div class="info-card-label">Phone / WhatsApp</div>
@@ -833,7 +834,7 @@
         <div class="contact-item-icon">✉️</div>
         <div>
           <div class="contact-item-label">Email</div>
-          <div class="contact-item-value"><a href="mailto:hasan.ethics@gmail.com">hasan.ethics@gmail.com</a></div>
+          <div class="contact-item-value"><a href="/cdn-cgi/l/email-protection#fe969f8d9f90d09b8a96979d8dbe99939f9792d09d9193"><span class="__cf_email__" data-cfemail="90f8f1e3f1febef5e4f8f9f3e3d0f7fdf1f9fcbef3fffd">[email&#160;protected]</span></a></div>
         </div>
       </div>
       <div class="contact-item">
@@ -871,7 +872,7 @@
   © 2026 Md. Hasan Miah — IT Professional & Japan Visa Specialist · Dhaka, Bangladesh
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -910,16 +911,4 @@
 
   // Also trigger skill bars when skills section comes into view
   const skillsObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
-          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 300);
-        });
-      }
-    });
-  }, { threshold: 0.1 });
-  const skillsSection = document.getElementById('skills');
-  if (skillsSection) skillsObs.observe(skillsSection);
-</script>
-</body>
-</html>
+    entries.forEach(entr
