@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md. Hasan Miah — IT Professional & Visa Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f2eb;
+    --accent: #c8472a;
+    --gold: #d4a853;
+    --muted: #6b6b75;
+    --light: #e8e4da;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s ease, width 0.3s, height 0.3s;
+    mix-blend-mode: multiply;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--light);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem 5rem 4rem;
+    position: relative;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; color: var(--accent);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-name em {
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+  }
+  .hero-title {
+    font-size: 1.1rem; font-weight: 400;
+    color: var(--muted); line-height: 1.6;
+    max-width: 400px; margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700;
+    color: var(--ink); line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 1s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--ink); color: var(--paper);
+    padding: 0.9rem 2rem;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border: 2px solid var(--ink);
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent; color: var(--ink);
+    padding: 0.9rem 2rem;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 2px solid var(--ink);
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+
+  .hero-right {
+    background: var(--ink);
+    position: relative;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 14rem; font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    white-space: nowrap;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+  .hero-card {
+    position: relative; z-index: 2;
+    padding: 3rem;
+    opacity: 0; animation: fadeIn 1s 1.2s forwards;
+  }
+  .hero-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .hero-card-value {
+    color: var(--paper); font-size: 1rem; font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+  .hero-card-value strong { color: var(--gold); font-weight: 600; }
+  .hero-location {
+    position: absolute; top: 3rem; right: 3rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.78rem; color: rgba(255,255,255,0.5);
+    font-family: 'DM Mono', monospace;
+  }
+  .location-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; color: var(--accent);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-text {
+    font-size: 1.1rem; line-height: 1.9;
+    color: #333;
+  }
+  .about-text p { margin-bottom: 1.2rem; }
+  .about-highlight {
+    background: var(--paper);
+    border-left: 3px solid var(--accent);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    font-size: 1rem;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .about-sidebar {}
+  .info-card {
+    background: var(--paper);
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .info-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; color: var(--muted);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .info-card-value { font-size: 0.92rem; font-weight: 500; color: var(--ink); }
+  .info-card-value a { color: var(--accent); text-decoration: none; }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--paper); }
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 11px; top: 0; bottom: 0;
+    width: 1px; background: var(--light);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    width: 24px; height: 24px;
+    background: var(--paper);
+    border: 2px solid var(--light);
+    border-radius: 50%;
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .timeline-dot.current { border-color: var(--accent); }
+  .timeline-dot.current::after {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .timeline-content {}
+  .timeline-company {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--ink); margin-bottom: 0.3rem;
+  }
+  .timeline-role {
+    font-size: 0.88rem; color: var(--accent);
+    font-weight: 600; letter-spacing: 0.04em;
+    margin-bottom: 0.3rem; text-transform: uppercase;
+  }
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .timeline-desc {
+    font-size: 0.92rem; line-height: 1.8; color: #444;
+    margin-bottom: 0.8rem;
+  }
+  .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 500;
+    padding: 0.3rem 0.75rem;
+    background: var(--white);
+    color: var(--muted);
+    border: 1px solid var(--light);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--ink); color: var(--paper); }
+  #skills .section-title { color: var(--paper); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 0;
+  }
+  .skill-group {
+    background: rgba(255,255,255,0.04);
+    padding: 2rem;
+    transition: background 0.3s;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .skill-group:hover { background: rgba(255,255,255,0.08); }
+  .skill-group-title {
+    font-size: 0.72rem; color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .skill-item {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  .skill-name { font-size: 0.88rem; color: rgba(255,255,255,0.8); }
+  .skill-bar {
+    width: 80px; height: 2px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+  }
+  .skill-bar-fill {
+    position: absolute; left: 0; top: 0; height: 100%;
+    background: var(--accent);
+    width: 0; transition: width 1s ease;
+  }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--white); }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .edu-card {
+    background: var(--paper);
+    padding: 2rem;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .edu-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700;
+    margin-bottom: 0.4rem; color: var(--ink);
+  }
+  .edu-institution { font-size: 0.9rem; color: var(--accent); font-weight: 600; margin-bottom: 0.3rem; }
+  .edu-period { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+  /* ── CERTIFICATIONS ── */
+  #certifications { background: var(--paper); }
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .cert-card {
+    background: var(--white);
+    padding: 1.5rem;
+    display: flex; flex-direction: column;
+    border-left: 3px solid var(--gold);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .cert-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+  .cert-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .cert-name { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; }
+  .cert-institute { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .cert-year { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); }
+
+  /* ── LANGUAGES ── */
+  #languages { background: var(--ink); color: var(--paper); }
+  #languages .section-title { color: var(--paper); }
+  .lang-grid { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .lang-card {
+    flex: 1; min-width: 200px;
+    background: rgba(255,255,255,0.05);
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+  .lang-card:hover { background: rgba(255,255,255,0.1); }
+  .lang-flag { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .lang-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--paper); margin-bottom: 0.4rem; }
+  .lang-level { font-size: 0.78rem; color: var(--gold); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--accent); color: var(--paper); }
+  #contact .section-label { color: rgba(255,255,255,0.6); }
+  #contact .section-label::before { background: rgba(255,255,255,0.6); }
+  #contact .section-title { color: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+  .contact-item-icon { font-size: 1.2rem; margin-top: 0.1rem; }
+  .contact-item-label { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .contact-item-value { font-size: 0.95rem; color: var(--white); font-weight: 500; }
+  .contact-item-value a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+  .contact-note {
+    background: rgba(0,0,0,0.15);
+    padding: 2rem;
+    font-size: 1rem; line-height: 1.8;
+    color: rgba(255,255,255,0.9);
+  }
+  .contact-note strong { color: var(--white); display: block; margin-bottom: 0.5rem; font-size: 1.2rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.4);
+    text-align: center; padding: 2rem 4rem;
+    font-size: 0.8rem; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 300px; }
+    .hero-left { padding: 4rem 1.5rem 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .lang-grid { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">MH<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="hero-name">
+      Md. Hasan<em>Miah</em>
+    </h1>
+    <p class="hero-title">
+      IT Professional · Japan Visa Specialist · Head of Application & Visa Processing · ICT Student in Japan
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">10+</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Years Team Lead</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Languages</span>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get In Touch →</a>
+      <a href="#experience" class="btn-secondary">View Work</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-text">IT</div>
+    <div class="hero-location">
+      <div class="location-dot"></div>
+      Kobe, Japan / Dhaka, Bangladesh
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-label">Current Role</div>
+      <div class="hero-card-value"><strong>Head of Application & Visa Processing</strong><br>Mirai Study Abroad & Consultancy</div>
+      <div class="hero-card-label">Currently Studying</div>
+      <div class="hero-card-value"><strong>ICT Program</strong><br>Kobe Institute of Computing, Japan</div>
+      <div class="hero-card-label">Specialization</div>
+      <div class="hero-card-value"><strong>Japan Student & Work Visa Processing</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who I Am</div>
+  <div class="section-title">About Me</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I am an accomplished IT professional with over <strong>10 years of experience</strong> spanning IT support, data management, visa processing, and team leadership. My career has taken me from teaching computer skills to underprivileged children in Dhaka to managing international application processes and leading tech teams for global mobile applications.</p>
+
+      <div class="about-highlight">
+        "My unique combination of IT expertise and Japan visa processing knowledge makes me a bridge between technology and international education."
+      </div>
+
+      <p>Currently, I serve as <strong>Head of Application & Visa Processing</strong> at Mirai Study Abroad & Consultancy, where I guide students through the complex journey of international education — with a deep specialization in Japan student, work, visit, and business visa applications.</p>
+
+      <p>Simultaneously, I am pursuing an <strong>ICT program at the Kobe Institute of Computing</strong> in Japan, constantly expanding my skills in social innovation and digital transformation. My goal is to grow as a global IT professional, contributing to modern digital projects with the cross-cultural perspective I've developed through years of international work.</p>
+    </div>
+    <div class="about-sidebar">
+      <div class="info-card">
+        <div class="info-card-label">Email</div>
+        <div class="info-card-value"><a href="mailto:hasan.ethics@gmail.com">hasan.ethics@gmail.com</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Phone / WhatsApp</div>
+        <div class="info-card-value"><a href="tel:+8801939075007">+880 1939 075007</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">LinkedIn</div>
+        <div class="info-card-value"><a href="https://linkedin.com/in/hasanjapanbd" target="_blank">linkedin.com/in/hasanjapanbd</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Location</div>
+        <div class="info-card-value">Kobe, Japan &amp; Dhaka, Bangladesh</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Nationality</div>
+        <div class="info-card-value">Bangladeshi</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Visa Specialization</div>
+        <div class="info-card-value">Japan — Student, Work, Visit, Business</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work History</div>
+  <div class="section-title">Professional Experience</div>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot current"></div>
+      <div class="timeline-content">
+        <div class="timeline-company">Mirai Study Abroad & Consultancy</div>
+        <div class="timeline-role">Head of Application & Visa Processing</div>
+        <div class="timeline-period">November 2023 — Present · Dhaka, Bangladesh · Full-Time</div>
+        <div class="timeline-desc">Lead a dedicated team to facilitate international university applications and visa processing for students across Bangladesh. Specialize in Japan visa applications — managing the full process from document review to interview preparation.</div>
+        <div class="timeline-desc">Oversee compliance with immigration policies, coordinate with partner universities internationally, maintain confidential client databases, and develop strategies to improve department efficiency and accuracy.</div>
+        <div class="timeline-tags">
+          <span class="tag">Japan Visa Processing</span>
+          <span class="tag">Team Leadership</span>
+          <span class="tag">Application Management</span>
+          <span class="tag">Client Relations</span>
+          <span class="tag">Immigration Compliance</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-company">Brain Craft Ltd.</div>
+        <div class="timeline-role">Data Support Team Lead</div>
+        <div class="timeline-period">November 2019 — September 2023 · Dhaka, Bangladesh · Full-Time</div>
+        <div class="timeline-desc">Served as Team Lead for the Data Support division at a software development company specializing in mobile and web applications. Managed app data operations, QA testing, and content workflows using Jira Board for project tracking.</div>
+        <div class="timeline-desc">Supported international mobile apps including Sticker Maker, Photo Collage, Slide Show Maker, and GIF Maker through data handling and technical troubleshooting. Maintained web servers, created digital content (GIFs, banners, templates), and led a cross-functional team.</div>
+        <div class="timeline-tags">
+          <span class="tag">Jira</span>
+          <span class="tag">App QA Testing</span>
+          <span class="tag">Web Server Management</span>
+          <span class="tag">Image Segmentation / AI</span>
+          <span class="tag">Adobe Photoshop</span>
+          <span class="tag">GIF Creation</span>
+          <span class="tag">IT Support</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-company">UCEP Bangladesh</div>
+        <div class="timeline-role">Computer Instructor (Freelance)</div>
+        <div class="timeline-period">May 2009 — December 2012 · Dhaka, Bangladesh</div>
+        <div class="timeline-desc">Taught basic computer skills — including typing, MS Office, and digital literacy — to underprivileged children, empowering them with technology knowledge for a better future.</div>
+        <div class="timeline-tags">
+          <span class="tag">Computer Training</span>
+          <span class="tag">MS Office</span>
+          <span class="tag">Teaching</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">What I Do</div>
+  <div class="section-title">Skills & Expertise</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">🛂 Visa & Application</div>
+      <div class="skill-item"><span class="skill-name">Japan Visa Processing</span><div class="skill-bar"><div class="skill-bar-fill" data-width="95"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Student Visa</span><div class="skill-bar"><div class="skill-bar-fill" data-width="95"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Work / Business Visa</span><div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Immigration Compliance</span><div class="skill-bar"><div class="skill-bar-fill" data-width="88"></div></div></div>
+      <div class="skill-item"><span class="skill-name">University Applications</span><div class="skill-bar"><div class="skill-bar-fill" data-width="92"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">💻 IT & Technical</div>
+      <div class="skill-item"><span class="skill-name">IT Support</span><div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Computer Hardware</span><div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Network & LAN Setup</span><div class="skill-bar"><div class="skill-bar-fill" data-width="80"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Server Admin Panel</span><div class="skill-bar"><div class="skill-bar-fill" data-width="82"></div></div></div>
+      <div class="skill-item"><span class="skill-name">CCTV Configuration</span><div class="skill-bar"><div class="skill-bar-fill" data-width="78"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">📊 Data & Management</div>
+      <div class="skill-item"><span class="skill-name">Data Management</span><div class="skill-bar"><div class="skill-bar-fill" data-width="93"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Microsoft Office</span><div class="skill-bar"><div class="skill-bar-fill" data-width="95"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Jira Project Management</span><div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Team Leadership</span><div class="skill-bar"><div class="skill-bar-fill" data-width="88"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Image Segmentation / AI</span><div class="skill-bar"><div class="skill-bar-fill" data-width="80"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">🎨 Design & Content</div>
+      <div class="skill-item"><span class="skill-name">Adobe Photoshop</span><div class="skill-bar"><div class="skill-bar-fill" data-width="80"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Adobe Illustrator</span><div class="skill-bar"><div class="skill-bar-fill" data-width="75"></div></div></div>
+      <div class="skill-item"><span class="skill-name">GIF Creation</span><div class="skill-bar"><div class="skill-bar-fill" data-width="88"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Video Editing</span><div class="skill-bar"><div class="skill-bar-fill" data-width="72"></div></div></div>
+      <div class="skill-item"><span class="skill-name">App QA Testing</span><div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">📱 Digital Marketing</div>
+      <div class="skill-item"><span class="skill-name">Social Media Marketing</span><div class="skill-bar"><div class="skill-bar-fill" data-width="82"></div></div></div>
+      <div class="skill-item"><span class="skill-name">SEO</span><div class="skill-bar"><div class="skill-bar-fill" data-width="75"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Google AdSense</span><div class="skill-bar"><div class="skill-bar-fill" data-width="70"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Web Administration</span><div class="skill-bar"><div class="skill-bar-fill" data-width="78"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Android/iOS App Testing</span><div class="skill-bar"><div class="skill-bar-fill" data-width="83"></div></div></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">🤝 Soft Skills</div>
+      <div class="skill-item"><span class="skill-name">Team Leadership</span><div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Client Communication</span><div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Problem Solving</span><div class="skill-bar"><div class="skill-bar-fill" data-width="88"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Cross-cultural Work</span><div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div></div>
+      <div class="skill-item"><span class="skill-name">Training & Mentoring</span><div class="skill-bar"><div class="skill-bar-fill" data-width="82"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Academic Background</div>
+  <div class="section-title">Education</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">ICT — Social Innovation by ICT</div>
+      <div class="edu-institution">🇯🇵 Kobe Institute of Computing (KIC), Japan</div>
+      <div class="edu-period">October 2025 — October 2027 (Ongoing)</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Bachelor of Engineering — Computer Science & Engineering</div>
+      <div class="edu-institution">🇧🇩 University of Development Alternative (UODA), Dhaka</div>
+      <div class="edu-period">2019 — 2023</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Diploma in Computer Technology</div>
+      <div class="edu-institution">Multimedia Computer & Engineering Technology, Dhaka</div>
+      <div class="edu-period">April 2014 — September 2018</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">HSC — Secretarial Science</div>
+      <div class="edu-institution">Hilphul Phujul Technical & B.M. College, Dhaka</div>
+      <div class="edu-period">January 2011 — August 2013</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Professional Development</div>
+  <div class="section-title">Certifications & Training</div>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <div class="cert-icon">📋</div>
+      <div class="cert-name">Professional Customer Service</div>
+      <div class="cert-institute">Dhaka Calls / SEIP & BACCO</div>
+      <div class="cert-year">2019</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🗣️</div>
+      <div class="cert-name">Verbal Communication in English</div>
+      <div class="cert-institute">WSDA Bangladesh</div>
+      <div class="cert-year">2019</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📱</div>
+      <div class="cert-name">Social Media Marketing (SMM)</div>
+      <div class="cert-institute">Institute of Creative Design</div>
+      <div class="cert-year">2023</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">💻</div>
+      <div class="cert-name">Laptop & Desktop Service & Troubleshooting</div>
+      <div class="cert-institute">Laptop Museum, Bangladesh</div>
+      <div class="cert-year">2014</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🌐</div>
+      <div class="cert-name">Advance Hardware & Basic Networking</div>
+      <div class="cert-institute">Institute of Creative Design</div>
+      <div class="cert-year">2011</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🎨</div>
+      <div class="cert-name">Graphics Design & Video Editing</div>
+      <div class="cert-institute">Institute of Creative Design</div>
+      <div class="cert-year">2010</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📊</div>
+      <div class="cert-name">Microsoft Office Application</div>
+      <div class="cert-institute">Institute of Creative Design</div>
+      <div class="cert-year">2010</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🖥️</div>
+      <div class="cert-name">Server Admin Panel Management</div>
+      <div class="cert-institute">Brain Craft Ltd.</div>
+      <div class="cert-year">2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section id="languages">
+  <div class="section-label">Communication</div>
+  <div class="section-title">Languages</div>
+  <div class="lang-grid">
+    <div class="lang-card">
+      <div class="lang-flag">🇧🇩</div>
+      <div class="lang-name">Bangla</div>
+      <div class="lang-level">Native</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇬🇧</div>
+      <div class="lang-name">English</div>
+      <div class="lang-level">Full Professional</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇮🇳</div>
+      <div class="lang-name">Hindi</div>
+      <div class="lang-level">Business Level</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇯🇵</div>
+      <div class="lang-name">Japanese</div>
+      <div class="lang-level">Basic</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Let's Connect</div>
+  <div class="section-title">Get In Touch</div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value"><a href="mailto:hasan.ethics@gmail.com">hasan.ethics@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📱</div>
+        <div>
+          <div class="contact-item-label">WhatsApp / Mobile</div>
+          <div class="contact-item-value"><a href="tel:+8801939075007">+880 1939 075007</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">💼</div>
+        <div>
+          <div class="contact-item-label">LinkedIn</div>
+          <div class="contact-item-value"><a href="https://linkedin.com/in/hasanjapanbd" target="_blank">linkedin.com/in/hasanjapanbd</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Address</div>
+          <div class="contact-item-value">Dag-5699, Hasan Nagar, Kamrangirchar<br>Ashrafabad-1211, Dhaka, Bangladesh</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-note">
+      <strong>Open to Opportunities</strong>
+      I am available for roles in IT Support, Application & Visa Consulting, Data Management, and International Education. Whether you're an employer, student needing Japan visa help, or a tech company — feel free to reach out.
+      <br><br>
+      🇯🇵 Japan Visa inquiries especially welcome.
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Md. Hasan Miah — IT Professional & Japan Visa Specialist · Dhaka, Bangladesh
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Intersection Observer for timeline + skill bars
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate skill bars inside
+        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.timeline-item, .skill-group').forEach(el => observer.observe(el));
+
+  // Also trigger skill bars when skills section comes into view
+  const skillsObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 300);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  const skillsSection = document.getElementById('skills');
+  if (skillsSection) skillsObs.observe(skillsSection);
+</script>
+</body>
+</html>
